@@ -1,0 +1,17 @@
+## Interface: 16001
+## Title: Item Finder
+## Notes: Search every item in the game by name
+## Author: You
+## Version: 0.1
+## SavedVariables: ItemFinderDB
+
+# Core: data and rules (no UI)
+Core\Config.lua
+Core\Stats.lua
+Core\Items.lua
+
+# UI
+UI\Window.lua
+UI\MinimapButton.lua
+
+Core\Commands.lua
