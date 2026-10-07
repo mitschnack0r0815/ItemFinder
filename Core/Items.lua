@@ -84,7 +84,15 @@ local function CountStats(item, delta)
 	end
 end
 
+-- Leftover and placeholder items: "OLDRecruit's Belt", "[PH] ...". Not "Old Greatsword".
+local function IsUnwanted(name)
+	return name:find("^OLD") or name:find("^%[")
+end
+
 local function StoreItem(itemID, name, quality, itemLevel, reqLevel)
+	if IsUnwanted(name) then
+		return
+	end
 	local items = ns.GetDB().items
 	local old = items[itemID]
 	if old then
@@ -276,6 +284,12 @@ scanner:SetScript("OnEvent", function(self, event, itemID, success)
 			db.scan.nextID = 1
 			db.scan.done = false
 			db.scan.paused = nil
+		end
+		-- Saved before these were skipped
+		for id, item in pairs(db.items) do
+			if IsUnwanted(item.n) then
+				db.items[id] = nil
+			end
 		end
 		for id, item in pairs(db.items) do
 			lowerNames[id] = item.n:lower()
